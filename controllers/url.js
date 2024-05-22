@@ -12,4 +12,14 @@ const generateNewShortURL = async (req, res) => {
   return res.json({ shortId: shortID });
 };
 
-module.exports = { generateNewShortURL };
+const getOriginalURL = async (req, res) => {
+  const shortId = req.params.shortId;
+  const entry = await URL.findOneAndUpdate(
+    { shortId },
+    { $push: { visitHistory: { timestamp: Date.now() } } }
+  );
+  if (!entry) return res.status(404).json({ error: "url not found" });
+  return res.redirect(entry.originalUrl);
+};
+
+module.exports = { generateNewShortURL, getOriginalURL };
