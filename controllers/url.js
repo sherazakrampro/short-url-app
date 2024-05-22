@@ -22,4 +22,13 @@ const getOriginalURL = async (req, res) => {
   return res.redirect(entry.originalUrl);
 };
 
-module.exports = { generateNewShortURL, getOriginalURL };
+const getAnalytics = async (req, res) => {
+  const shortId = req.params.shortId;
+  const result = await URL.findOne({ shortId });
+  return res.json({
+    totalClicks: result.visitHistory.length,
+    analytics: result.visitHistory,
+  });
+};
+
+module.exports = { generateNewShortURL, getOriginalURL, getAnalytics };
