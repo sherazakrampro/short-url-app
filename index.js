@@ -1,5 +1,8 @@
 const express = require("express");
 require("dotenv").config();
+const connectDB = require("./db/connectDB");
+
+connectDB(process.env.MONGO_URL);
 
 const app = express();
 app.use(express.json());
