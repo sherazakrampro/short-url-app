@@ -5,6 +5,8 @@ const connectDB = require("./db/connectDB");
 const urlRoute = require("./routes/url");
 const staticRoute = require("./routes/staticRoute");
 const userRoute = require("./routes/user");
+const cookieParser = require("cookie-parser");
+const { restrictToLoggedInUser } = require("./middlewares/auth");
 
 const app = express();
 
@@ -15,9 +17,10 @@ app.set("views", path.resolve("./views"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // routes
-app.use("/url", urlRoute);
+app.use("/url", restrictToLoggedInUser, urlRoute);
 app.use("/", staticRoute);
 app.use("/user", userRoute);
 
