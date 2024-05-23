@@ -6,7 +6,7 @@ const urlRoute = require("./routes/url");
 const staticRoute = require("./routes/staticRoute");
 const userRoute = require("./routes/user");
 const cookieParser = require("cookie-parser");
-const { restrictToLoggedInUser } = require("./middlewares/auth");
+const { restrictToLoggedInUser, checkAuth } = require("./middlewares/auth");
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(cookieParser());
 
 // routes
 app.use("/url", restrictToLoggedInUser, urlRoute);
-app.use("/", staticRoute);
+app.use("/", checkAuth, staticRoute);
 app.use("/user", userRoute);
 
 const PORT = process.env.PORT || 5000;

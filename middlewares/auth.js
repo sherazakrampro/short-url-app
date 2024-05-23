@@ -10,4 +10,11 @@ const restrictToLoggedInUser = async (req, res, next) => {
   next();
 };
 
-module.exports = { restrictToLoggedInUser };
+const checkAuth = async (req, res, next) => {
+  const userUid = req.cookies?.uid;
+  const user = await getUser(userUid);
+  req.user = user;
+  next();
+};
+
+module.exports = { restrictToLoggedInUser, checkAuth };
