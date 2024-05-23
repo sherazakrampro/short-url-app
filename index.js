@@ -4,6 +4,7 @@ require("dotenv").config();
 const connectDB = require("./db/connectDB");
 const urlRoute = require("./routes/url");
 const staticRoute = require("./routes/staticRoute");
+const userRoute = require("./routes/user");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 app.use("/url", urlRoute);
 app.use("/", staticRoute);
+app.use("/user", userRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
