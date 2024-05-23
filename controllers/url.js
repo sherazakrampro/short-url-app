@@ -32,4 +32,14 @@ const getAnalytics = async (req, res) => {
   });
 };
 
-module.exports = { generateNewShortURL, getOriginalURL, getAnalytics };
+const getAllURLs = async (req, res) => {
+  const result = await URL.find({});
+  return res.render("home");
+};
+
+module.exports = {
+  generateNewShortURL,
+  getOriginalURL,
+  getAnalytics,
+  getAllURLs,
+};
