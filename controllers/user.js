@@ -12,7 +12,7 @@ const userLogin = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
     return res.status(400).json({ error: "all fields are required" });
-  await User.findOne({ email, password });
+  const user = await User.findOne({ email, password });
   if (!user)
     return res.render("login", { error: "invalid username or password" });
   return res.redirect("/");
