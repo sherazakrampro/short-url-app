@@ -10,7 +10,7 @@ const generateNewShortURL = async (req, res) => {
     originalUrl: body.url,
     visitHistory: [],
   });
-  return res.json({ shortId: shortID });
+  return res.render("home", { shortId: shortID });
 };
 
 const getOriginalURL = async (req, res) => {
@@ -32,14 +32,8 @@ const getAnalytics = async (req, res) => {
   });
 };
 
-const getAllURLs = async (req, res) => {
-  const result = await URL.find({});
-  return res.render("home");
-};
-
 module.exports = {
   generateNewShortURL,
   getOriginalURL,
   getAnalytics,
-  getAllURLs,
 };

@@ -3,7 +3,6 @@ const {
   generateNewShortURL,
   getAnalytics,
   getOriginalURL,
-  getAllURLs,
 } = require("../controllers/url");
 
 const router = express.Router();

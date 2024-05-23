@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      body {
+        font-family: roboto;
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
   </head>
   <body>
-    <h1>All URLs</h1>
+    <h1>URL Shortener</h1>
+    <% if (locals.shortId) { %>
+    <p>URL Generated: http://localhost:3000/url/<%= shortId %></p>
+    <% } %>
+    <div>
+      <form action="/url" method="POST">
+        <label>Enter Original URL</label>
+        <input type="text" name="url" placeholder="https://www.example.com" />
+        <button type="submit">Generate</button>
+      </form>
+    </div>
   </body>
 </html>
