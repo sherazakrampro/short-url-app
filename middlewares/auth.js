@@ -1,18 +1,40 @@
 const { getUser } = require("../service/auth");
 
 const restrictToLoggedInUser = async (req, res, next) => {
-  const userUid = req.cookies?.uid;
-  if (!userUid) return res.redirect("/login");
+  // const userUid = req.cookies?.uid;
+  const userUid = req.headers["authorization"];
+  console.log(req.headers);
 
-  const user = await getUser(userUid);
-  if (!user) return res.redirect("/login");
+  if (!userUid || !userUid.startsWith("Bearer ")) {
+    return res.redirect("/login");
+  }
+
+  const token = userUid.split("Bearer ")[1];
+  const user = getUser(token);
+
+  if (!user) {
+    return res.redirect("/login");
+  }
+
   req.user = user;
   next();
 };
 
 const checkAuth = async (req, res, next) => {
-  const userUid = req.cookies?.uid;
-  const user = await getUser(userUid);
+  // const userUid = req.cookies?.uid;
+  const userUid = req.headers["authorization"];
+
+  if (!userUid || !userUid.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const token = userUid.split("Bearer ")[1];
+  const user = getUser(token);
+
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
   req.user = user;
   next();
 };
