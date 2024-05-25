@@ -19,8 +19,8 @@ const userLogin = async (req, res) => {
     return res.render("login", { error: "invalid username or password" });
 
   const token = setUser(user);
-  // res.cookie("uid", token);
-  return res.json({ token });
+  res.cookie("token", token);
+  return res.redirect("/");
 };
 
 module.exports = { userSignUp, userLogin };

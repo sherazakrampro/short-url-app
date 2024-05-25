@@ -8,9 +8,13 @@ if (!secret) {
 
 const setUser = (user) => {
   try {
-    return jwt.sign({ _id: user._id, email: user.email }, secret, {
-      expiresIn: "1h",
-    });
+    return jwt.sign(
+      { _id: user._id, email: user.email, role: user.role },
+      secret,
+      {
+        expiresIn: "1h",
+      }
+    );
   } catch (error) {
     console.error("Error signing token:", error);
     throw error;
